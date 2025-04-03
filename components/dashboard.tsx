@@ -11,7 +11,6 @@ import {
 } from "@tanstack/react-table";
 import { Filters } from "@/types/table";
 import Table from "./table";
-import { Loader2Icon } from "lucide-react";
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
@@ -86,11 +85,7 @@ const Dashboard = () => {
         </div>
       </div> */}
       <div className="px-10 w-full flex justify-center">
-        {loading ? (
-          <Loader2Icon size={40} className="animate-spin text-cyan-600" />
-        ) : (
-          <Table tableInstance={tableInstance} />
-        )}
+        <Table tableInstance={tableInstance} loading={loading} />
       </div>
     </div>
   );

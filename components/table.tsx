@@ -2,17 +2,24 @@ import { flexRender, Table as TableType } from "@tanstack/react-table";
 import { Document } from "@/types/table";
 import { Table, TableBody, TableRow, TableCell } from "./ui/table";
 import { Checkbox } from "./ui/checkbox";
-import { Download, Link2, MoreHorizontal, Trash } from "lucide-react";
+import {
+  Download,
+  Link2,
+  Loader2Icon,
+  MoreHorizontal,
+  Trash,
+} from "lucide-react";
 
 type props = {
   tableInstance: TableType<Document>;
+  loading: boolean;
 };
 
 const iconSize = 16;
 const iconStroke = 2.5;
 const iconStyle = "cursor-pointer text-black";
 
-const DocTable = ({ tableInstance }: props) => {
+const DocTable = ({ tableInstance, loading }: props) => {
   return (
     <div className="flex flex-col gap-2 w-full">
       <div className="text-[#608F97] font-bold text-2xl">All Files</div>
@@ -38,19 +45,25 @@ const DocTable = ({ tableInstance }: props) => {
           className={iconStyle}
         />
       </div>
-      <Table>
-        <TableBody>
-          {tableInstance.getRowModel().rows?.map(({ id, getVisibleCells }) => (
-            <TableRow key={id}>
-              {getVisibleCells().map(({ id, column, getContext }) => (
-                <TableCell key={id}>
-                  {flexRender(column.columnDef.cell, getContext())}
-                </TableCell>
+      {loading ? (
+        <Loader2Icon size={40} className="animate-spin text-cyan-600" />
+      ) : (
+        <Table>
+          <TableBody>
+            {tableInstance
+              .getRowModel()
+              .rows?.map(({ id, getVisibleCells }) => (
+                <TableRow key={id}>
+                  {getVisibleCells().map(({ id, column, getContext }) => (
+                    <TableCell key={id}>
+                      {flexRender(column.columnDef.cell, getContext())}
+                    </TableCell>
+                  ))}
+                </TableRow>
               ))}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+          </TableBody>
+        </Table>
+      )}
     </div>
   );
 };

@@ -5,6 +5,7 @@ import { Filters } from "@/types/table";
 import { Table } from "@tanstack/react-table";
 import { Document } from "@/types/table";
 import Select from "./select";
+import { Button } from "./ui/button";
 
 interface ToolbarProps {
   searchableItems: (string | undefined)[];
@@ -62,8 +63,15 @@ const Toolbar = ({ searchableItems, filters, setFilters }: ToolbarProps) => {
         </div>
       </div>
       {/* dropdown or on hover expands to show more stats */}
-      <div className="flex items-center gap-8">
-        <div className="flex flex-col text-sm text-gray-600">
+      <div className="flex gap-2 mt-1">
+        <Button className=" bg-blue-200 text-blue-600 text-sm font-medium rounded-full hover:bg-blue-300 hover:text-blue-700 transition-colors">
+          Merge
+        </Button>
+        <Button className=" bg-green-200 text-green-600 text-sm font-medium rounded-full hover:bg-green-300 hover:text-green-700  transition-colors">
+          Approve
+        </Button>
+      </div>
+      {/* <div className="flex flex-col text-sm text-gray-600">
           <span className="font-medium text-gray-800">Statistics</span>
           <div className="flex gap-2 mt-1">
             <span>Lines: 20</span>
@@ -72,11 +80,11 @@ const Toolbar = ({ searchableItems, filters, setFilters }: ToolbarProps) => {
             <span>•</span>
             <span>Documents: 2</span>
           </div>
-        </div>
-        <div className="flex flex-col justify-center items-end">
-          <span className=" text-gray-600 text-base">Welcome back,</span>
-          <span className="font-semibold text-xl text-cyan-600">Jonathan</span>
-        </div>
+        </div> */}
+
+      <div className="flex flex-col justify-center items-end">
+        <span className=" text-gray-600 text-base">Welcome back,</span>
+        <span className="font-semibold text-xl text-cyan-600">Jonathan</span>
       </div>
     </div>
   );
