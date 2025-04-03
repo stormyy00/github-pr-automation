@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Toolbar from "./toolbar";
-import { ITEMS } from "@/data/mock";
+// import { ITEMS } from "@/data/mock";
 import Tile from "./tile";
 import { COLUMNS } from "@/data/columns";
 import {
@@ -14,7 +14,7 @@ import Table from "./table";
 import { Loader2Icon } from "lucide-react";
 
 const Dashboard = () => {
-  const [data, setData] = useState(ITEMS);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filters, setFilters] = useState<Filters[]>([
     { id: "title", value: "" },
@@ -71,7 +71,7 @@ const Dashboard = () => {
       />
       <div className="mx-10 m-4 text-[#608F97] font-bold text-2xl px-10 w-full">
         Recently Reviewed
-        <div className="flex gap-4 grid grid-cols-5">
+        <div className="gap-4 grid grid-cols-5">
           {data.map(({ title, created_at, user }, index) => (
             <Tile key={index} title={title} date={created_at} name={user} />
           ))}
@@ -87,7 +87,7 @@ const Dashboard = () => {
       </div> */}
       <div className="px-10 w-full flex justify-center">
         {loading ? (
-          <Loader2Icon size={40} className="animate-spin" />
+          <Loader2Icon size={40} className="animate-spin text-cyan-600" />
         ) : (
           <Table tableInstance={tableInstance} />
         )}

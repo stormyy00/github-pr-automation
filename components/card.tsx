@@ -9,17 +9,15 @@ type props = {
   handleConfigure: () => void;
   onClick: () => void;
   checked: boolean;
+  created_at: string;
 };
 const Documents = ({
   title,
   id,
-  user,
-  created_at,
-  number,
-  mergeable,
   handleConfigure,
   onClick,
   checked,
+  created_at,
 }: props) => {
   return (
     <div className=" flex items-center justify-between p-4 bg-white rounded-xl shadow-md hover:shadow-lg transition duration-300">
@@ -31,7 +29,7 @@ const Documents = ({
           href={`documents/${id}`}
           className="text-lg font-medium text-gray-900 hover:text-gray-600 transition duration-200"
         >
-          {number} | {title} | {user} | {mergeable} | {created_at}
+          {title} | {created_at}
         </Link>
       </div>
       <div className="flex items-center gap-3 text-gray-500">
