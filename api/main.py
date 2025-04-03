@@ -353,7 +353,7 @@ def github_webhook():
                 return jsonify({"error": "Missing PR number"}), 400
             
             # Handle PR opened or reopened events
-            if action in ["opened", "reopened", "ready_for_review", "synchronize"]:
+            if action in ["opened", "reopened", "ready_for_review"]:
                 # Notify Discord about new PR
                 pr_title = data.get("pull_request", {}).get("title", "Unknown PR")
                 pr_user = data.get("pull_request", {}).get("user", {}).get("login", "Unknown User")
@@ -373,16 +373,10 @@ def github_webhook():
                 # Auto-review the PR
                 review = analyze_pr(pr_number)
                 
-                # Try to auto-merge if review looks good
-                success, message = auto_merge_pr(pr_number, review)
-                
                 return jsonify({
                     "status": "success", 
                     "message": f"Processed {action} event for PR #{pr_number}",
-                    "review": review,
-                    "merge_attempted": True,
-                    "merge_success": success,
-                    "merge_message": message
+                    "review": review
                 })
                 
         return jsonify({"status": "ignored", "message": f"Event {event_type} ignored"})
@@ -390,7 +384,6 @@ def github_webhook():
     except Exception as e:
         logging.error(f"❌ Error processing webhook: {e}")
         return jsonify({"error": str(e)}), 500
-
 
 @app.route("/health", methods=["GET"])
 def health_check():

@@ -14,7 +14,7 @@ const iconStyle = "cursor-pointer text-black";
 
 const DocTable = ({ tableInstance }: props) => {
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 w-full">
       <div className="text-[#608F97] font-bold text-2xl">All Files</div>
       <div className="flex flex-row items-center gap-3 bg-gray-100 rounded-full p-2">
         <Checkbox

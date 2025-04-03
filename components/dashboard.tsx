@@ -1,8 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Toolbar from "./toolbar";
-import Card from "./card";
-import { ITEMS, DOCS } from "@/data/mock";
+import { ITEMS } from "@/data/mock";
 import Tile from "./tile";
 import { COLUMNS } from "@/data/columns";
 import {
@@ -10,12 +9,12 @@ import {
   getCoreRowModel,
   getFilteredRowModel,
 } from "@tanstack/react-table";
-// import { Filters } from "@/types/dashboard";
-import Table from "./table";
 import { Filters } from "@/types/table";
+import Table from "./table";
+import { Loader2Icon } from "lucide-react";
 
 const Dashboard = () => {
-  const [documents, setData] = useState(ITEMS);
+  const [data, setData] = useState(ITEMS);
   const [loading, setLoading] = useState(false);
   const [filters, setFilters] = useState<Filters[]>([
     { id: "title", value: "" },
@@ -26,7 +25,7 @@ const Dashboard = () => {
 
   const tableInstance = useReactTable({
     columns: COLUMNS,
-    data: documents,
+    data: data,
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     state: {
@@ -55,13 +54,13 @@ const Dashboard = () => {
       .finally(() => setLoading(false));
   }, []);
 
-  const handleConfigure = () => {
-    console.log("hello");
-    // setPopup({
-    //   ...popup,
-    //   visible: true,
-    // });
-  };
+  // const handleConfigure = () => {
+  // console.log("hello");
+  // setPopup({
+  //   ...popup,
+  //   visible: true,
+  // });
+  // };
   return (
     <div className="w-full flex flex-col items-center gap-5">
       <Toolbar
@@ -72,22 +71,26 @@ const Dashboard = () => {
       />
       <div className="mx-10 m-4 text-[#608F97] font-bold text-2xl px-10 w-full">
         Recently Reviewed
-        <div className="flex gap-4 w-full">
-          {DOCS.map(({ title, text }, index) => (
-            <Tile key={index} name={title} date={text} image={"M"} />
+        <div className="flex gap-4 grid grid-cols-5">
+          {data.map(({ title, created_at, user }, index) => (
+            <Tile key={index} title={title} date={created_at} name={user} />
           ))}
         </div>
       </div>
-      <div className="mx-10 m-4 text-[#608F97] font-bold text-2xl px-10 w-full">
+      {/* <div className="mx-10 m-4 text-[#608F97] font-bold text-2xl px-10 w-full">
         Recently Merged
         <div className="flex gap-4 w-full">
           {DOCS.map(({ title, text }, index) => (
             <Tile key={index} name={title} date={text} image={"M"} />
           ))}
         </div>
-      </div>
-      <div className="px-10 w-full">
-        <Table tableInstance={tableInstance} />
+      </div> */}
+      <div className="px-10 w-full flex justify-center">
+        {loading ? (
+          <Loader2Icon size={40} className="animate-spin" />
+        ) : (
+          <Table tableInstance={tableInstance} />
+        )}
       </div>
     </div>
   );
