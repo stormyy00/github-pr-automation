@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "flask": "cd api && pip3 install -r requirements.txt && python3 -m flask --app api/index run -p 5000 --reload",
+    "flask": "cd api && FLASK_ENV=development flask run\"",
     "next": "next dev",
-    "dev": "concurrently \"next dev\" \"npm run flask\"",
+    "dev": "concurrently \"next dev\" \"cd api && FLASK_APP=start.py FLASK_ENV=development flask run\"",
     "build": "next build",
     "start": "next start",
     "check": "npx prettier --check .",

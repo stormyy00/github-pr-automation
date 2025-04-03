@@ -38,4 +38,10 @@ next-env.d.ts
 .env
 
 /api/__pycache__
-api/app/__pycache__
+api/app/__pycache__/
+api/app/health/__pycache__/
+api/app/mergepr/__pycache__/
+api/app/pullrequests/__pycache__/
+api/app/reviewpr/__pycache__/
+api/app/utils/__pycache__/
+api/app/webhook/__pycache__/
