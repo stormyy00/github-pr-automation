@@ -12,8 +12,11 @@ import {
 import { Filters } from "@/types/table";
 import Table from "./table";
 
+const repo = ["Hackathon.js", "Latex-AI", "REPO"];
+
 const Dashboard = () => {
   const [data, setData] = useState([]);
+  const [repositories, setRepositories] = useState([]);
   const [loading, setLoading] = useState(false);
   const [filters, setFilters] = useState<Filters[]>([
     { id: "title", value: "" },
@@ -31,7 +34,11 @@ const Dashboard = () => {
       columnFilters: filters,
     },
   });
+
   useEffect(() => {
+    setLoading(true);
+
+    // Fetch pull requests data
     fetch("/api/pull-requests", {
       method: "GET",
     })
@@ -44,13 +51,31 @@ const Dashboard = () => {
       .then((data) => {
         console.log(data);
         setData(data);
-        // setSearch(data);
       })
       .catch((error) => {
-        console.error("Error fetching newsletters:", error);
-        setLoading(false);
+        console.error("Error fetching pull requests:", error);
       })
       .finally(() => setLoading(false));
+
+    // Fetch repositories data
+    fetch("/api/repositories", {
+      method: "GET",
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((repos) => {
+        console.log("Repositories loaded:", repos);
+        setRepositories(repos);
+      })
+      .catch((error) => {
+        console.error("Error fetching repositories:", error);
+        // Fallback to empty array if API fails
+        setRepositories([]);
+      });
   }, []);
 
   // const handleConfigure = () => {
@@ -67,6 +92,8 @@ const Dashboard = () => {
         filters={filters}
         setFilters={setFilters}
         tableInstance={tableInstance}
+        repositories={repositories}
+        setRepositories={setRepositories}
       />
       <div className="mx-10 m-4 text-[#608F97] font-bold text-2xl px-10 w-full">
         Recently Reviewed
